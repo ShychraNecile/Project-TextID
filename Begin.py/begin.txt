@@ -1,0 +1,7 @@
+Het begin, begin.py, moet aan de volgende eisen voldoen:
+
+- Het bevat een klasse TextModel met een werkende constructor en __repr__
+- Deze klasse bevat een werkende methode read_text_from_file
+- Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths
+
+Lever dit bestand, samen met je uitleg hierover in begin.txt, in Gradescope in. 

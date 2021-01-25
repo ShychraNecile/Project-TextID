@@ -1,0 +1,58 @@
+Begin.py
+
+Het begin, begin.py, moet aan de volgende eisen voldoen:
+
+1) Het bevat een klasse TextModel met een werkende constructor en __repr__ :: CHECK
+2) Deze klasse bevat een werkende methode read_text_from_file :: CHECK
+3) Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths
+
+Lever dit bestand, samen met je uitleg hierover in begin.txt, in Gradescope in als onderdeel van het huiswerk.
+
+
+
+Milestone.py
+
+De milestone, milestone.py, moet aan de volgende eisen voldoen:
+
+1) Het bevat een klasse TextModel met een werkende constructor en __repr__
+2) Deze klasse bevat twee werkende methodes read_text_from_file en clean_string
+3) Deze klasse bevat de werkende teksteigenschapmethode:
+- make_sentence_lengths
+- make_word_lengths
+- make_words
+- make_stems
+
+Je hoeft je zelfbedachte teksteigenschap nog niet te bouwen, 
+en je hoeft twee modellen ook nog niet te kunnen vergelijken, 
+maar als het wel zo is, des te beter!
+
+Lever dit bestand, samen met je uitleg hierover in milestone.txt, 
+in Gradescope in als onderdeel van het huiswerk.
+
+
+Oplevering.py
+
+Voor de oplevering, het laatste inlevermoment voor dit project, moet je het volledige tekstidentificatiesysteem afmaken. 
+We zullen je programma testen met de hierboven beschreven functie compare_text_with_two_models.
+
+De oplevering, oplevering.py, moet een complete uitwerking van het project bevatten. 
+
+Lever dit bestand, samen met je uitleg hierover in oplevering.txt 
+en de tekstbestanden die je gebruikt hebt voor je analyse, in Gradescope in. 
+
+In de uitleg moet je in ieder geval je zelfbedachte teksteigenschap toelichten, 
+en de gestelde tekstanalysevragen beantwoorden.
+
+
+
+
+for w in cutup_text:
+            if pw not in self.sentence_lengths:
+                self.sentence_lengths[pw] = []
+            else:
+                self.sentence_lengths[pw] += [w]
+
+            if w[-1] in ".?!;":
+                pw = "$"
+            else:
+                pw = w
