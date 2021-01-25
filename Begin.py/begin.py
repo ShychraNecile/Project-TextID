@@ -71,12 +71,10 @@ class TextModel:
 
         return self.text
         
-
     
+  
     def make_sentence_lengths(self, text):
         """        
-        should use the text in the input string s to create the self.sentencelengths dictionary 
-
         De make_sentence_lengths(self) moet parameter text (type string) gebruiken om de
         dictionary self.sentence_lengths te vullen.
         output: dictionary self.sentence_lengths.
@@ -84,67 +82,74 @@ class TextModel:
 
         assert tm.sentence_lengths == {16: 1, 5: 1, 6: 1} => 1 zin met 16 woorden, 1 zin met 5 woorden, 1 zin met 6 woorden
         
-
         """
         # dus, je moet het aantal zinnen tellen, én het aantal woorden in de zin.
         # als x is zin, return True. If True, count words. if word endswhith '.?!' dan 
-
         # count_words. If word endswith '.?!' dan return is_sentence. count_sentence =+ 1
-
         # het resultaat hiervan wordt dmv een dictionary getoond.
 
         print("The whole original string is:\n",self.text)
         print("")
-       
-        # number of words:
+           
+        # all the variables
+        word_count = 0
         count_words_text = 0
-        cutup_text = self.text.split() 
+        sentence_count = 0
 
-        for word in cutup_text:
-            count_words_text +=1
-            print(word, count_words_text)
-            #print(count_words_text)
-            
+        cutup_text = self.text.split() 
+        sentence = []
+        last_word = []
+        my_list = []
+
+        print(cutup_text)
+        
+        self.sentence_lengths = {}     
+
+        # for word in cutup_text:
+        #     word.lower()
+        #     self.sentence_lengths.setdefault(word, 0)
+        #     self.sentence_lengths[word] = self.sentence_lengths[word] + 1
+        # print(self.sentence_lengths)  
                    
         total_num_words_text = len(cutup_text)
         print("The number of words in the text are: ", str(total_num_words_text))
+        print("")
 
 
-        # NUMBER OF SENTENCES:
-        # print(cutup_text)        
-        sentence_count = 0
-        sentence = []
+        # NUMBER OF SENTENCES:     
+
         for w in cutup_text:
-            
+            print(w) 
+                       
+                        
             if w[-1] not in ".?!":
                 sentence.append(w)
-                
-            #one_sentence = sentence.append(w)
+                #num_words_in_sentence = len(sentence) + 1 
+                               
                        
             if w[-1] in ".?!;":
-                last_word = []
+                last_word = []                
                 sentence_count += 1
                 #one_sentence.append(last_word)
                 last_word.append(w)
-                print(f"the last word of the sentence was {last_word}.")
-                              
-                           
             
-        print("The total number of sentences are: ", sentence_count)
+                # print(word_count)
+                    
 
-        # number of words in a sentence
-        self.sentence_lengths = {}
+
+                # whole_sentence = sentence + last_word
+                # print(f"Sentence {sentence_count} is: {whole_sentence}")
+                print(f"The last word of sentence {sentence_count} was {last_word}.")
+                # print(f"Sentence {sentence_count} consists of {word_count} words.")  
+                
+                print("")                                                
         
-        # keys = range(len(cutup_text))
-        # values = [cutup_text]
-
-        # for i in keys:
-        #     self.sentence_lengths[i] = values[i]
-        # print(self.sentence_lengths)
-
+        # number of words in a sentence
+        
+        self.sentence_lengths = {}
 
         pw = "$" # previous word
-        word_count = 0
+        word_count = 0        
 
         for w in cutup_text:
             
@@ -158,8 +163,9 @@ class TextModel:
             else:
                 pw = w
 
-        return self.sentence_lengths    
-     
+            return self.sentence_lengths    
+
+    
 
 
 # _TESTS
