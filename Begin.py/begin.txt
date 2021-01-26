@@ -1,7 +1,27 @@
 Het begin, begin.py, moet aan de volgende eisen voldoen:
 
-- Het bevat een klasse TextModel met een werkende constructor en __repr__
-- Deze klasse bevat een werkende methode read_text_from_file
-- Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths
+1- Het bevat een klasse TextModel met een werkende constructor en __repr__   CHECK
+2- Deze klasse bevat een werkende methode read_text_from_file   CHECK
+3- Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths   CHECK
 
 Lever dit bestand, samen met je uitleg hierover in begin.txt, in Gradescope in. 
+
+1- Deze vooralsnog niet aangepast. Is voor dit onderdeel van de Opdracht
+niet nodig, want we hoeven nog geen nieuwe attributen te maken.
+2- Hier vooralsnog niets aangepast. Zie vorige opmerking.
+3- Deze functie verdeelt eerst de tekst in een lijst van losse woorden.
+Voor elk nw in die lijst worden een aantal zaken gecontroleerd:
+Met de eerste for-loop:
+> of de tekens '. ? !' niet in de nw voorkomen
+> of pw gelijk is aan het eerder gedefinieerde "$"
+Als dat waar is, dan wordt de count verhoogd met 1
+> of het laatste karakter van nw bestaat uit een: '.?!'
+Als dat wel zo is, dan wordt count toegevoegd aan de lijst zin, zodat
+er een lijst ontstaat met het aantal zinnen.
+
+Met de tweede for-loop:
+> Hier wordt bijgehouden hoeveel zinnen er een x aantal woorden hebben.
+Als die leeg is, komt het getal 1 erin.
+Als die niet leeg is, dus er zit minimaal 1 in, dan komt er 1 bij op.
+
+Het resultaat is een dictionairy: sentence_lenghts{woorden : aantal zinnen}
