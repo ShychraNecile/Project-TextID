@@ -70,3 +70,13 @@ class TextModel:
             self.text = f.read().replace("\n", "").rstrip("")            
 
         return self.text
+
+
+        def cleanString(self, s):
+            """cleanString should accept a string s and return a string withno punctuation and 
+            no upper-case letters.
+            """
+            for p in string.punctuation:
+                s = s.replace(p, '')
+                s = s.lower()
+                return s
