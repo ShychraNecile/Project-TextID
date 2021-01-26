@@ -7,17 +7,17 @@
 #
 
 
-
 """
 De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in het model.
 Doel: zodat je ermee kan testen en kan controleren dat ze werken.
 > constructor en __repr__
-> read_text_from_file
-> make_sentence_lengths
+> clean_string
+> make_word_lenghts
+> make_words
+> make_stems
 """
 
 from string import punctuation
-
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -25,7 +25,7 @@ class TextModel:
     def __init__(self):
         """
         Constructor.
-        Create an empty TextModel.
+        Creates an empty TextModel.
         """
         
         # Maak dictionary's voor elke eigenschap
@@ -53,10 +53,8 @@ class TextModel:
         return s
 
 
-    # Voeg hier andere methodes toe.
-    # Je hebt in het bijzonder methodes nodig die het model vullen.
 
-    # METHODS
+    # METHODES
     def read_text_from_file(self, filename):
         """
         methode:    read_text_from_file(self, filename) 
@@ -72,11 +70,67 @@ class TextModel:
         return self.text
 
 
-        def cleanString(self, s):
-            """cleanString should accept a string s and return a string withno punctuation and 
-            no upper-case letters.
+    def clean_string(self, s):
+        """
+        This method, clean_string(self, s) 
+        arguments: s, type string 
+        return: s, type string, which has no punctuation or upper-case letters.
+        """
+
+        for p in punctuation:
+            s = s.replace(p, "")
+            s = s.lower()
+            
+        return s       
+
+
+    # TEKSTEIGENSCHAPPEN
+    def make_sentence_lengths(self, text):
+        """        
+        De make_sentence_lengths(self) moet parameter text (type string) gebruiken om de
+        dictionary self.sentence_lengths te vullen.
+        output: dictionary self.sentence_lengths.
+        Het resultaat van deze functie is: dictionary: sentence; words     
+        """
+        print("The whole original string is:\n",self.text)
+        print("")
+        
+        pw = "$"
+        LoW = self.text.split()
+        count = 0
+        zin = []
+
+        total_num_words_text = len(LoW)
+        print("Total number of words in text are: ", total_num_words_text)                   
+
+        for nw in LoW:
+            if nw not in ".?!" or pw == "$":
+                count +=1
+            if nw[-1] in ".?!":
+              #  pw = "$" 
+                zin += [count]
+                count = 0
+            else:
+                pw=nw
+
+        for number in zin:
+            if number not in self.sentence_lengths: 
+                self.sentence_lengths[number] = 1
+            else: 
+                self.sentence_lengths[number] += 1
+
+        return self.sentence_lengths    
+
+    
+        def make_word_lengths(self, s):
             """
-            for p in string.punctuation:
-                s = s.replace(p, '')
-                s = s.lower()
-                return s
+            arguments: s, this is the returnvalue of the clean_string method.
+            return: dictionairy of the lenght of the words.
+            """
+
+
+
+
+
+        # _TESTS
+
