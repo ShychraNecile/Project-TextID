@@ -90,82 +90,14 @@ class TextModel:
 
         print("The whole original string is:\n",self.text)
         print("")
-           
-        # all the variables
-        word_count = 0
-        count_words_text = 0
-        sentence_count = 0
-
-        cutup_text = self.text.split() 
-        sentence = []
-        last_word = []
-        my_list = []
-
-        print(cutup_text)
         
-        self.sentence_lengths = {}     
 
-        # for word in cutup_text:
-        #     word.lower()
-        #     self.sentence_lengths.setdefault(word, 0)
-        #     self.sentence_lengths[word] = self.sentence_lengths[word] + 1
-        # print(self.sentence_lengths)  
-                   
-        total_num_words_text = len(cutup_text)
-        print("The number of words in the text are: ", str(total_num_words_text))
-        print("")
+        pw = "$"
+        LoW = self.text.split()
+        count = 0
+        zin = []
 
-
-        # NUMBER OF SENTENCES:     
-
-        for w in cutup_text:
-            print(w) 
-                       
-                        
-            if w[-1] not in ".?!":
-                sentence.append(w)
-                #num_words_in_sentence = len(sentence) + 1 
-                               
-                       
-            if w[-1] in ".?!;":
-                last_word = []                
-                sentence_count += 1
-                #one_sentence.append(last_word)
-                last_word.append(w)
-            
-                # print(word_count)
-                    
-
-
-                # whole_sentence = sentence + last_word
-                # print(f"Sentence {sentence_count} is: {whole_sentence}")
-                print(f"The last word of sentence {sentence_count} was {last_word}.")
-                # print(f"Sentence {sentence_count} consists of {word_count} words.")  
-                
-                print("")                                                
-        
-        # number of words in a sentence
-        
-        self.sentence_lengths = {}
-
-        pw = "$" # previous word
-        word_count = 0        
-
-        for w in cutup_text:
-            
-            if pw not in self.sentence_lengths:
-                self.sentence_lengths[pw] = []
-            else:
-                self.sentence_lengths[pw] += [w]
-
-            if w[-1] in ".?!;":
-                pw = "$"
-            else:
-                pw = w
-
-            return self.sentence_lengths    
-
-    
+        print(LoW)   
 
 
 # _TESTS
