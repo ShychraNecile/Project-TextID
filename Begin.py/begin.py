@@ -91,13 +91,30 @@ class TextModel:
         print("The whole original string is:\n",self.text)
         print("")
         
-
         pw = "$"
         LoW = self.text.split()
         count = 0
         zin = []
 
-        print(LoW)   
+        #print(LoW)         
+
+        for nw in LoW:
+            if nw not in ".?!" or pw == "$":
+                count +=1
+            if nw[-1] in ".?!":
+              #  pw = "$" 
+                zin += [count]
+                count = 0
+            else:
+                pw=nw
+
+        for number in zin:
+            if number not in self.sentence_lengths: 
+                self.sentence_lengths[number] = 1
+            else: 
+                self.sentence_lengths[number] += 1
+
+        return self.sentence_lengths  
 
 
 # _TESTS
