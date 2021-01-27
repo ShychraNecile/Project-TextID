@@ -64,8 +64,8 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.
         """
 
-        file = open(filename)
-        text = file.read().replace("\n", "").rstrip("")
+        with open(filename) as file:
+            text = file.read().replace("\n", "").rstrip("")
 
         return text
 
