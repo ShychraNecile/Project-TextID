@@ -92,7 +92,10 @@ class TextModel:
         sentences = []
         word_length = 0
 
-        # print(LoW)
+        total_num_words_text = len(words)
+        print("The total number of words in the text is: ", total_num_words_text)
+
+        #print(LoW)
 
         for word in words:
             if word not in ".?!" or previous_word == "$":
