@@ -6,8 +6,6 @@
 # Naam: Annemarleen Bosma
 #
 
-
-
 """
 De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in het model.
 Doel: zodat je ermee kan testen en kan controleren dat ze werken.
@@ -65,15 +63,15 @@ class TextModel:
                     self.text: variabele waaraan de inhoud toegekend is 
                     van het bestand filename. Type: 1 hele lange string.   
         """
-
-        with open("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt") as f:
+        
+        with open(filename) as f:
             self.text = f.read().replace("\n", "").rstrip("")            
 
-        return self.text
+        #return self.text
         
     
   
-    def make_sentence_lengths(self, text):
+    def make_sentence_lengths(self):
         """        
         De make_sentence_lengths(self) moet parameter text (type string) gebruiken om de
         dictionary self.sentence_lengths te vullen.
@@ -96,7 +94,10 @@ class TextModel:
         count = 0
         zin = []
 
-        #print(LoW)         
+        total_num_words_text = len(LoW)
+        print("The total number of words in the text is: ", total_num_words_text)
+
+        #print(LoW)             
 
         for nw in LoW:
             if nw not in ".?!" or pw == "$":
