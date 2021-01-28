@@ -25,20 +25,19 @@ class TextModel:
         Constructor.
         Create an empty TextModel.
         """
-        
-        # Maak dictionary's voor elke eigenschap
-        
-        # attributes: 
-        self.words = {}             # Om woorden te tellen
-        self.word_lengths = {}      # Om woordlengtes te tellen
-        self.stems = {}             # Om stammen te tellen
-        self.sentence_lengths = {}  # Om zinslengtes te tellen
-        
-        # Maak een eigen dictionary:
-        
-        self.my_feature = {}        # Om ... te tellen
 
-        
+        # Maak dictionary's voor elke eigenschap
+
+        # attributes:
+        self.words = {}  # Om woorden te tellen
+        self.word_lengths = {}  # Om woordlengtes te tellen
+        self.stems = {}  # Om stammen te tellen
+        self.sentence_lengths = {}  # Om zinslengtes te tellen
+
+        # Maak een eigen dictionary:
+
+        self.my_feature = {}  # Om ... te tellen
+
     def __repr__(self):
         """
         Display the contents of a TextModel.
@@ -50,79 +49,88 @@ class TextModel:
         s += 'MIJN EIGENSCHAP:\n' + str(self.my_feature)
         return s
 
-
     # Voeg hier andere methodes toe.
     # Je hebt in het bijzonder methodes nodig die het model vullen.
 
     # METHODS
-    def read_text_from_file(self, filename):
-        """
-        methode:    read_text_from_file(self, filename) 
-        argument:   self; verwijst naar de klasse TextModel en maakt hiervan 'a instance of a class'
-        argument:   filename; van het type string. 
-                    self.text: variabele waaraan de inhoud toegekend is 
-                    van het bestand filename. Type: 1 hele lange string.   
-        """
-        
-        with open(filename) as f:
-            self.text = f.read().replace("\n", "").rstrip("")            
 
-        #return self.text
-        
-    
-  
-    def make_sentence_lengths(self):
-        """        
+    @staticmethod
+    def read_text_from_file(filename):
+        """
+        methode:    read_text_from_file(self, filename)
+        argument:   self; verwijst naar de klasse TextModel en maakt hiervan 'a instance of a class'
+        argument:   filename; van het type string.
+                    self.text: variabele waaraan de inhoud toegekend is
+                    van het bestand filename. Type: 1 hele lange string.
+        """
+
+        with open(filename) as file:
+            text = file.read().replace("\n", "").rstrip("")
+
+        return text
+
+    def make_sentence_lengths(self, text):
+        """
         De make_sentence_lengths(self) moet parameter text (type string) gebruiken om de
         dictionary self.sentence_lengths te vullen.
         output: dictionary self.sentence_lengths.
-        Het resultaat van deze functie is: dictionary: sentence; words 
+        Het resultaat van deze functie is: dictionary: sentence; words
 
         assert tm.sentence_lengths == {16: 1, 5: 1, 6: 1} => 1 zin met 16 woorden, 1 zin met 5 woorden, 1 zin met 6 woorden
-        
+
         """
         # dus, je moet het aantal zinnen tellen, én het aantal woorden in de zin.
-        # als x is zin, return True. If True, count words. if word endswhith '.?!' dan 
+        # als x is zin, return True. If True, count words. if word endswhith '.?!' dan
         # count_words. If word endswith '.?!' dan return is_sentence. count_sentence =+ 1
         # het resultaat hiervan wordt dmv een dictionary getoond.
 
-        print("The whole original string is:\n",self.text)
+        print("The whole original string is:\n", text)
         print("")
-        
-        pw = "$"
-        LoW = self.text.split()
-        count = 0
-        zin = []
 
-        total_num_words_text = len(LoW)
+        previous_word = "$"
+        words = text.split()
+        sentences = []
+        word_length = 0
+
+        total_num_words_text = len(words)
         print("The total number of words in the text is: ", total_num_words_text)
 
-        #print(LoW)             
+        #print(LoW)
 
-        for nw in LoW:
-            if nw not in ".?!" or pw == "$":
-                count +=1
-            if nw[-1] in ".?!":
-              #  pw = "$" 
-                zin += [count]
-                count = 0
+        for word in words:
+            if word not in ".?!" or previous_word == "$":
+                word_length += 1
+            if word[-1] in ".?!":
+                sentences += [word_length]
+                word_length = 0
             else:
-                pw=nw
+                previous_word = word
 
-        for number in zin:
-            if number not in self.sentence_lengths: 
+        for number in sentences:
+            if number not in self.sentence_lengths:
                 self.sentence_lengths[number] = 1
-            else: 
+            else:
                 self.sentence_lengths[number] += 1
 
-        return self.sentence_lengths  
+        return self.sentence_lengths
+
+    # _TESTS
 
 
-# _TESTS
-tm = TextModel()
+def run():
+    model = TextModel()
 
-# Zet hier aanroepen neer die het model vullen met informatie
-print('TextModel:\n', tm)
-tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
+    # Toon model voor het vullen
+    print('TextModel:\n', model)
+    # de text ophalen
+    text = model.read_text_from_file("../test.txt")
+    # Aanroepen die het model vullen met informatie
+    model.make_sentence_lengths(text)
 
-#assert tm.text == test_text
+    # Toon model met gevulde waarden
+    print('TextModel:\n', model)
+
+    # assert tm.text == test_text
+
+
+run()
