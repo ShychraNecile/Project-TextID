@@ -64,11 +64,10 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.   
         """
         
-        with open(filename) as f:
-            self.text = f.read().replace("\n", "").rstrip("")            
+        with open(filename) as f:            
+            self.text = f.read().replace("\n", "").rstrip("")        
 
         #return self.text
-        
     
   
     def make_sentence_lengths(self):
@@ -123,6 +122,3 @@ tm = TextModel()
 
 # Zet hier aanroepen neer die het model vullen met informatie
 print('TextModel:\n', tm)
-tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-
-#assert tm.text == test_text

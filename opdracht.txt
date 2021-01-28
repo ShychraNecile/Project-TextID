@@ -4,22 +4,25 @@ Het begin, begin.py, moet aan de volgende eisen voldoen:
 
 1) Het bevat een klasse TextModel met een werkende constructor en __repr__ :: CHECK
 2) Deze klasse bevat een werkende methode read_text_from_file :: CHECK
-3) Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths
+3) Deze klasse bevat de werkende teksteigenschapmethode make_sentence_lengths :: CHECK
 
 Lever dit bestand, samen met je uitleg hierover in begin.txt, in Gradescope in als onderdeel van het huiswerk.
 
+ingeleverd op dinsdag 26 januari 2021
 
 
 Milestone.py
 
 De milestone, milestone.py, moet aan de volgende eisen voldoen:
 
-1) Het bevat een klasse TextModel met een werkende constructor en __repr__
-2) Deze klasse bevat twee werkende methodes read_text_from_file en clean_string
+1) Het bevat een klasse TextModel met een werkende constructor en __repr__ :: CHECK
+2) Deze klasse bevat twee werkende methodes:
+- read_text_from_file  :: CHECK
+- clean_string :: CHECK
 3) Deze klasse bevat de werkende teksteigenschapmethode:
-- make_sentence_lengths
-- make_word_lengths
-- make_words
+- make_sentence_lengths  :: CHECK
+- make_word_lengths :: CHE
+- make_words :: CHECK
 - make_stems
 
 Je hoeft je zelfbedachte teksteigenschap nog niet te bouwen, 
@@ -45,14 +48,3 @@ en de gestelde tekstanalysevragen beantwoorden.
 
 
 
-
-for w in cutup_text:
-            if pw not in self.sentence_lengths:
-                self.sentence_lengths[pw] = []
-            else:
-                self.sentence_lengths[pw] += [w]
-
-            if w[-1] in ".?!;":
-                pw = "$"
-            else:
-                pw = w
