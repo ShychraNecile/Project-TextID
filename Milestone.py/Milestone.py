@@ -18,9 +18,10 @@ Doel: zodat je ermee kan testen en kan controleren dat ze werken.
 """
 
 from string import punctuation
-from nltk.stem import LancasterStemmer
-
-ls = LancasterStemmer()
+#from nltk.stem import LancasterStemmer
+#ls = LancasterStemmer()
+from nltk.stem import PorterStemmer
+ps = PorterStemmer()
 
 
 
@@ -166,16 +167,22 @@ class TextModel:
 
     def make_stems(self):
         """geeft de "stam" weer van een woord en telt het voorkomen"""
+
         ctxt = self.clean_string(self.text)
         LoW = ctxt.split() 
 
         for word in LoW:
-            if word not in self.stems:
-                self.stems[ls.stem(word)] = 1
+
+            if ps.stem(word) not in self.stems:
+                self.stems[ps.stem(word)] = 1
+
             else:
-                self.stems[ls.stem(word)] += 1
+                self.stems[ps.stem(word)] += 1
+                
         return self.stems
         
+
+
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
 tm=TextModel()
