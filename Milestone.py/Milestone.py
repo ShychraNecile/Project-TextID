@@ -3,7 +3,7 @@
 #
 # Opdracht: Tekstidentificatie
 #
-# Naam: Annemarleen Bosma
+# Naam: Annemarleen Bosma en Johan Kamps
 #
 
 
@@ -12,14 +12,17 @@ De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in h
 Doel: zodat je ermee kan testen en kan controleren dat ze werken.
 > constructor en __repr__ :: CHECK
 > clean_string :: CHECK
-> make_word_lenghts
-> make_words
-> make_stems
+> make_word_lenghts :: CHECK
+> make_words :: CHECK
+> make_stems :: CHECK
 """
 
 from string import punctuation
 from nltk.stem import LancasterStemmer
+
 ls = LancasterStemmer()
+
+
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -138,9 +141,17 @@ class TextModel:
 
 
     def make_words(self):
-        """     
-        TEXT
-        """   
+        """
+        De methode make_words(self) creeert een dictionary van de opgeschoonde woorden (zelf).
+        Output: dictionary van een stam als key, en als value het aantal dat de desbetreffende key voorkomt.
+        return: dictionary self.stems
+        
+        Dus, stam : getal hoe vaak het voorkomt in het opgeschoonde woord.
+
+        assert tm.words == { 'dit': 3, 'is': 3, 'een': 2, 'korte': 2, 'zin': 3, 'geen': 2, 'omdat': 1, 'deze': 1, 'meer': 1, 'dan': 1, '10': 1, 'woorden': 1,
+        'en': 1, 'getal': 1, 'bevat': 1, 'vraag': 1, 'of': 1, 'wel': 1}
+        """  
+
         ctxt = self.clean_string(self.text)
         LoW = ctxt.split() 
 
@@ -157,6 +168,7 @@ class TextModel:
         """geeft de "stam" weer van een woord en telt het voorkomen"""
         ctxt = self.clean_string(self.text)
         LoW = ctxt.split() 
+
         for word in LoW:
             if word not in self.stems:
                 self.stems[ls.stem(word)] = 1

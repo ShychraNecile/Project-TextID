@@ -14,10 +14,15 @@ Doel: zodat je ermee kan testen en kan controleren dat ze werken.
 > clean_string :: CHECK
 > make_word_lenghts :: CHECK
 > make_words :: CHECK
-> make_stems
+> make_stems :: CHECK
 """
 
 from string import punctuation
+from nltk.stem import LancasterStemmer
+
+ls = LancasterStemmer()
+
+
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -196,7 +201,7 @@ class TextModel:
         return self.words
 
 
-    # def make_stems(self):
+    def make_stems(self):
         """
         De methode make_stems(self) creëert een dictionary van de stammen van 
         de opgeschoonde woorden.
@@ -212,6 +217,19 @@ class TextModel:
 
         Om make_stems te implementeren, moet je een functie schrijven die woorden als invoer krijgt en stammen als uitvoer geeft. Je mag hierbij:.
         """
+        
+        clean_txt = self.clean_string(self.text)
+        LoW = clean_txt.split() 
+
+        for word in LoW:
+
+            if word not in self.stems:
+                self.stems[ls.stem(word)] = 1
+
+            else:
+                self.stems[ls.stem(word)] += 1
+
+        return self.stems
 
 
 
@@ -219,20 +237,7 @@ class TextModel:
         # _TESTS
 
 tm = TextModel()
-print('TextModel:\n', tm)
-tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-# tm = TextModel()
-# tm.make_sentence_lengths("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-# #assert tm.sentence_lengths == {16: 1, 5: 1, 6: 1}
-# tm = TextModel()
-# tm.make_clean_string("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-# #assert clean_s == clean_text
 
-# # test make_word_lengths
-# tm = TextModel()
-# tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-# tm.make_word_lengths("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-# assert tm.word_lengths == {2: 6, 3: 10, 4: 4, 5: 6, 7: 1}
 
 
 
