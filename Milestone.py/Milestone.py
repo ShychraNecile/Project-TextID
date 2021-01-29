@@ -115,16 +115,10 @@ class TextModel:
             else: 
                 self.sentence_lengths[number] += 1
 
-        print("sentence lengths")
+        print("sentence : lengths")
         return self.sentence_lengths    
 
     
-        # def make_word_lengths(self, s):
-        #     """
-        #     arguments: s, this is the returnvalue of the clean_string method.
-        #     return: dictionairy of the lenght of the words.
-        #     """
-
     def make_word_lengths(self):
         """     
         De make_word_lengths(self) geeft de het aantal woorden in de text weer en 
