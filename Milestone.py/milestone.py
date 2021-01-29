@@ -3,7 +3,7 @@
 #
 # Opdracht: Tekstidentificatie
 #
-# Naam: Annemarleen Bosma
+# Naam: Annemarleen Bosma en Johan Kamps
 #
 
 
@@ -64,10 +64,10 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.   
         """
 
-        with open(filename) as f:
+        with open("./test.txt") as f:
             self.text = f.read().replace("\n", "").rstrip("")            
 
-        #return self.text
+        return self.text
 
 
     def clean_string(self, text):
@@ -121,7 +121,7 @@ class TextModel:
             else: 
                 self.sentence_lengths[number] += 1
 
-        print("sentence lengths")
+        print("sentence : lengths")
         return self.sentence_lengths    
 
 
@@ -181,10 +181,9 @@ class TextModel:
         """
 
         self.words = {}
-        cleaned_string = tm.make_clean_string(self.text)
-        print(cleaned_string)
-                
+        cleaned_string = tm.make_clean_string(self.text)          
         LoW = cleaned_string.split()
+
         print(LoW)
 
         word_count = 0
@@ -197,7 +196,7 @@ class TextModel:
         return self.words
 
 
-    def make_stems(self):
+    # def make_stems(self):
         """
         De methode make_stems(self) creëert een dictionary van de stammen van 
         de opgeschoonde woorden.
@@ -229,10 +228,15 @@ tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/te
 # tm.make_clean_string("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
 # #assert clean_s == clean_text
 
-# test make_word_lengths
-tm = TextModel()
-tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-tm.make_word_lengths("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
-assert tm.word_lengths == {2: 6, 3: 10, 4: 4, 5: 6, 7: 1}
+# # test make_word_lengths
+# tm = TextModel()
+# tm.read_text_from_file("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
+# tm.make_word_lengths("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt")
+# assert tm.word_lengths == {2: 6, 3: 10, 4: 4, 5: 6, 7: 1}
+
+
+
+
+
 
 

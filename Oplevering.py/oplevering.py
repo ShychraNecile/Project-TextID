@@ -6,6 +6,7 @@
 # Naam: Annemarleen Bosma
 #
 
+from collections import Counter
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -35,6 +36,22 @@ class TextModel:
 
     # Voeg hier andere methodes toe.
     # Je hebt in het bijzonder methodes nodig die het model vullen.
+
+
+def nomalize_dictionary(d):
+    """
+    input d, niet genormaliseerde dictionary
+    output dn1: genormaliseerde dictionary
+    """
+
+    result = {}
+    # totaal aan waardes. Resultaat.
+    total = sum(d.values())
+   
+    for key, value in d.items():      # tuple unpacking  
+        result[key] = value / total
+
+    return result
 
 
 # Hier kan je dingen testen...
