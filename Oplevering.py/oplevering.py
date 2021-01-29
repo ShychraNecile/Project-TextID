@@ -38,20 +38,24 @@ class TextModel:
     # Je hebt in het bijzonder methodes nodig die het model vullen.
 
 
-def nomalize_dictionary(d):
+def nomalize_dictionary(self, d):
     """
-    input d, niet genormaliseerde dictionary
-    output dn1: genormaliseerde dictionary
-    """
+    De methode normalize_dictionary(self, d) krijgt één van de dictionary’s uit het model mee
+    en geeft een genormaliseerde versie terug.
+    Genormaliseerde versie is een versie waar de som van alle waardes exact 1.0 is.
 
-    result = {}
+    Input: d, type niet genormaliseerde dictionary
+    Output: nd: genormaliseerde dictionary
+    """
     # totaal aan waardes. Resultaat.
     total = sum(d.values())
    
     for key, value in d.items():      # tuple unpacking  
-        result[key] = value / total
+        self.result[key] = value / total
 
-    return result
+    return self.result
+
+
 
 
 # Hier kan je dingen testen...
