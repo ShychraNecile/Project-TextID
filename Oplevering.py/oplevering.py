@@ -1,5 +1,5 @@
 #
-# Milestone.py
+# Oplevering.py
 #
 # Opdracht: Tekstidentificatie
 #
@@ -182,11 +182,11 @@ class TextModel:
 
 
     def normalize_dictionary(self, d):
-        """TEXT"""
+        """Zet het absolute aantal voorkomens om naar een relatief deel"""
         total = sum(d.values())
         for key, value in d.items():
-            self.result[key] = value / total
-        return self.result
+            d[key] = value / total
+        return d
 
 
     def smallest_value(self, nd1, nd2):
