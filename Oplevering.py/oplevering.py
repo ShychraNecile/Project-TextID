@@ -37,11 +37,10 @@ class TextModel:
         self.word_lengths = {}      # Om woordlengtes te tellen
         self.stems = {}             # Om stammen te tellen
         self.sentence_lengths = {}  # Om zinslengtes te tellen
-        self.result = {}
-        self.punctuation = {}       # Interpunctie tellen
+
         # Maak een eigen dictionary:
         
-        self.my_feature = {}        # Om ... te tellen
+        self.punctuation = {}       # Interpunctie tellen
 
         
     def __repr__(self):
@@ -52,7 +51,7 @@ class TextModel:
         s += 'Woordlengtes:\n' + str(self.word_lengths) + '\n\n'
         s += 'Stammen:\n' + str(self.stems) + '\n\n'
         s += 'Zinslengtes:\n' + str(self.sentence_lengths) + '\n\n'
-        s += 'MIJN EIGENSCHAP:\n' + str(self.my_feature)
+        s += 'Interpunctie:\n' + str(self.punctuation)
         return s
 
 
@@ -85,7 +84,7 @@ class TextModel:
 
 
     # TEKSTEIGENSCHAPPEN
-    def make_sentence_lengths(self, text):
+    def make_sentence_lengths(self):
         """        
         De make_sentence_lengths(self) moet parameter text (type string) gebruiken om de
         dictionary self.sentence_lengths te vullen.
@@ -116,15 +115,10 @@ class TextModel:
         return self.sentence_lengths    
 
     
-        # def make_word_lengths(self, s):
-        #     """
-        #     arguments: s, this is the returnvalue of the clean_string method.
-        #     return: dictionairy of the lenght of the words.
-        #     """
-
+      
     def make_word_lengths(self):
         """     
-        De make_word_lengths(self) geeft de het aantal woorden in de text weer en 
+        Make_word_lengths(self) geeft de het aantal woorden in de text weer en 
         de lengte er van.
         """   
         LoW = self.text.split()   
@@ -194,6 +188,15 @@ class TextModel:
         min_nd1 = min(nd1.values())
         min_nd2 = min(nd2.values())
         return min(min_nd1, min_nd2)
+
+    
+    def create_all_dictionaries(self) :
+        """Draait alle methodes die dictionaries vullen"""
+        self.make_sentence_lengths()
+        self.make_word_lengths()
+        self.make_words()
+        self.make_stems()
+        self.make_punctuation()
 
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
