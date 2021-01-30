@@ -188,6 +188,13 @@ class TextModel:
             self.result[key] = value / total
         return self.result
 
+
+    def smallest_value(self, nd1, nd2):
+        """Kleinste waarde tussen twee dictionaries"""
+        min_nd1 = min(nd1.values())
+        min_nd2 = min(nd2.values())
+        return min(min_nd1, min_nd2)
+
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
 
