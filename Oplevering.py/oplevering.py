@@ -198,17 +198,23 @@ class TextModel:
         total = 0.0
         epsilon = self.smallest_value(nd1, nd2) / 2
         for key in d.keys():
-            if list(d.keys())[0]:
-                total += (2 * log2(list(d.values())[0]))
-            elif list(d.keys())[1]:
-                total += 1 * log2(list(d.values())[1])
-            elif list(d.keys())[2]:
-                total += 1 * log2(list(d.values())[2])
-            elif list(d.keys())[3]:
+            print(key)
+            if key == list(nd1.keys())[0]:
+                total += 2 * log2(list(nd1.values())[0])
+                print(total)
+            elif key == list(nd1.keys())[1]:
+                total += 1 * log2(list(nd1.values())[1])
+                print(total)
+            elif key == list(nd1.keys())[2]:
+                total += 1 * log2(list(nd1.values())[2])
+                print(total)
+            elif key == list(d.keys())[3]:
                 total += 2 * log2(epsilon)
-            elif list(d.keys())[4]:
+                print(total)
+            elif key == list(d.keys())[4]:
                 total += 2 * log2(epsilon)
-            return total
+                print(total)
+        return total
         
 
         
