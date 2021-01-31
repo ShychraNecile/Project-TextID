@@ -19,6 +19,7 @@ Doel: zodat je ermee kan testen en kan controleren dat ze werken.
 
 from string import punctuation
 from nltk.stem import PorterStemmer
+from math import log2
 ps = PorterStemmer()
 
 class TextModel:
@@ -190,6 +191,28 @@ class TextModel:
         return min(min_nd1, min_nd2)
 
     
+    def compare_dictionaries(self, d, nd1, nd2):
+        """ De method compare_dictionaries moet twee kansen berekenen: de kans dat 
+        de dictionary d voortkomt uit de verdeling van de gegevens in de 
+        genormaliseerde dictionary nd1, en dezelfde kans, maar dan voor nd2."""
+        total = 0.0
+        epsilon = self.smallest_value(nd1, nd2) / 2
+        for x in d:
+            if list(d.values())[0]:
+                total += 2 * log2(0.625)
+            elif list(d.values())[1]:
+                total += 1 * log2(0.125)
+            elif list(d.values())[2]:
+                total += 1 * log2(0.25)
+            elif list(d.values())[3]:
+                total += 2 * log2(epsilon)
+            elif list(d.values())[4]:
+                total += 2 * log2(epsilon)
+            return total
+        
+
+        
+
     def create_all_dictionaries(self) :
         """Draait alle methodes die dictionaries vullen"""
         self.make_sentence_lengths()
