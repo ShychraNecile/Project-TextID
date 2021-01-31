@@ -3,7 +3,7 @@
 #
 # Opdracht: Tekstidentificatie
 #
-# Naam: Annemarleen Bosma
+# Naam: Annemarleen Bosma en Johan Kamps
 #
 
 from collections import Counter
@@ -34,9 +34,7 @@ class TextModel:
         s += 'MIJN EIGENSCHAP:\n' + str(self.my_feature)
         return s
 
-    # Voeg hier andere methodes toe.
-    # Je hebt in het bijzonder methodes nodig die het model vullen.
-
+   
 
 def nomalize_dictionary(self, d):
     """
