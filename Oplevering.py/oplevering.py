@@ -197,16 +197,16 @@ class TextModel:
         genormaliseerde dictionary nd1, en dezelfde kans, maar dan voor nd2."""
         total = 0.0
         epsilon = self.smallest_value(nd1, nd2) / 2
-        for x in d:
-            if list(d.values())[0]:
-                total += 2 * log2(0.625)
-            elif list(d.values())[1]:
-                total += 1 * log2(0.125)
-            elif list(d.values())[2]:
-                total += 1 * log2(0.25)
-            elif list(d.values())[3]:
+        for key in d.keys():
+            if list(d.keys())[0]:
+                total += (2 * log2(list(d.values())[0]))
+            elif list(d.keys())[1]:
+                total += 1 * log2(list(d.values())[1])
+            elif list(d.keys())[2]:
+                total += 1 * log2(list(d.values())[2])
+            elif list(d.keys())[3]:
                 total += 2 * log2(epsilon)
-            elif list(d.values())[4]:
+            elif list(d.keys())[4]:
                 total += 2 * log2(epsilon)
             return total
         
