@@ -58,7 +58,7 @@ class TextModel:
 
 
     # METHODES
-
+    @classmethod
     def read_text_from_file(self, filename):
         """
         methode:    read_text_from_file(self, filename) 
@@ -215,7 +215,54 @@ class TextModel:
                         total_nd2 += value * log2(value1)   
             
         self.list_of_log_probs = [total_nd1, total_nd2]
-       
+        return self.list_of_log_probs
+
+    def compare_text_with_two_models(self, model1, model2):
+        """TEXT"""
+        words_list = self.compare_dictionaries(self.words, model1.words, model2.words)
+        words = ['%.2f' % elem for elem in words_list]
+        word_lengths_list = self.compare_dictionaries(self.word_lengths, model1.word_lengths, model2.word_lengths)
+        word_lengths = ['%.2f' % elem for elem in word_lengths_list]
+        sentence_lengths_list = self.compare_dictionaries(self.sentence_lengths, model1.sentence_lengths, model2.sentence_lengths)
+        sentence_lengths = ['%.2f' % elem for elem in sentence_lengths_list]
+        stems_list = self.compare_dictionaries(self.stems, model1.stems, model2.stems)
+        stems = ['%.2f' % elem for elem in stems_list]
+        punctuation_list = self.compare_dictionaries(self.punctuation, model1.punctuation, model2.punctuation)
+        punctuation = ['%.2f' % elem for elem in punctuation_list]
+        var_list = (words_list, word_lengths_list, sentence_lengths_list,stems_list, punctuation_list)
+        win1 = 0  
+        win2 = 0
+        Model= 0
+
+        for var in var_list:
+            if max(var) == var[0]:
+                win1 += 1
+            else:
+                win2 += 1
+        
+        if win1 > win2:
+            Model += 1
+        else:
+            Model += 2
+
+        print(
+            "Vergelijkingsresultaten:\n"
+            "\n"
+            "naam" + "\t\t\t" + "Model1" + "\t\t" + "Model2\n"
+            "----" + "\t\t\t" + "----" + "\t\t" + "----\n"
+            "words" + "\t\t\t" + (words[0])+ "\t\t" + (words[1]) + "\n"
+            "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t" + (word_lengths[1]) + "\n"
+            "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t" + (sentence_lengths[1]) + "\n"
+            "stems" + "\t\t\t" + (stems[0])+ "\t\t" + (stems[1]) + "\n"
+            "punctuation" + "\t\t" + (punctuation[0])+ "\t\t" + (punctuation[1]) + "\n"
+            "\n"
+            "-->  Model 1 wint op "+str(win1)+" features\n"
+            "-->  Model 2 wint op "+str(win2)+" features\n"
+            "\n"
+            "+++++     Model "+str(Model)+" komt beter overeen!     +++++"
+            )
+
+    #, word_lengths, sentence_lengths, stems, punctuation
 
 
 
@@ -227,6 +274,13 @@ class TextModel:
         self.make_stems()
         self.make_punctuation()
 
+    def normalize(self):
+        self.normalize_dictionary(self.words)
+        self.normalize_dictionary(self.word_lengths)
+        self.normalize_dictionary(self.sentence_lengths)
+        self.normalize_dictionary(self.stems)
+        self.normalize_dictionary(self.punctuation)
+
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
 
@@ -237,17 +291,18 @@ print(' +++++++++++ Model 1 +++++++++++ ')
 tm1 = TextModel()
 tm1.read_text_from_file('train1.txt')
 tm1.create_all_dictionaries()  # deze is hierboven gegeven
+tm1.normalize()
 print(tm1)
 
 print(' +++++++++++ Model 2+++++++++++ ')
 tm2 = TextModel()
 tm2.read_text_from_file('train2.txt')
 tm2.create_all_dictionaries()  # deze is hierboven gegeven
+tm2.normalize()
 print(tm2)
-
 
 print(' +++++++++++ Onbekende tekst +++++++++++ ')
 tm_unknown = TextModel()
 tm_unknown.read_text_from_file('unknown.txt')
 tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-print(tm_unknown)
+print(tm_unknown) 
