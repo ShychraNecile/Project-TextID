@@ -67,8 +67,7 @@ class TextModel:
                     self.text: variabele waaraan de inhoud toegekend is 
                     van het bestand filename. Type: 1 hele lange string.   
         """
-
-        with open("./test.txt") as f:
+        with open(filename) as f:
             self.text = f.read().replace("\n", "").rstrip("")            
 
         return self.text
@@ -234,3 +233,21 @@ class TextModel:
 
 tm=TextModel()
 
+print(' +++++++++++ Model 1 +++++++++++ ')
+tm1 = TextModel()
+tm1.read_text_from_file('train1.txt')
+tm1.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm1)
+
+print(' +++++++++++ Model 2+++++++++++ ')
+tm2 = TextModel()
+tm2.read_text_from_file('train2.txt')
+tm2.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm2)
+
+
+print(' +++++++++++ Onbekende tekst +++++++++++ ')
+tm_unknown = TextModel()
+tm_unknown.read_text_from_file('unknown.txt')
+tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm_unknown)
