@@ -68,8 +68,12 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.   
         """
         with open(filename) as f:
-            self.text = f.read().replace("\n", "").rstrip("")            
-
+            data = f.read().replace("\n", "").rstrip("")            
+            data = data.replace('\xad', '')
+            data = data.replace('\xad-', '')
+            data = data.replace('\u00ad', '')
+            data = data.replace('\N{SOFT HYPHEN}', '')
+            self.text = data
         return self.text
 
 
@@ -79,7 +83,7 @@ class TextModel:
         arguments: s, type string 
         return: string, which has no punctuation or upper-case letters.
         """
-        clean_string = str.maketrans('','',punctuation)        
+        clean_string = str.maketrans('','',punctuation)          
         return self.text.translate(clean_string) 
 
 
@@ -218,7 +222,7 @@ class TextModel:
         return self.list_of_log_probs
 
     def compare_text_with_two_models(self, model1, model2):
-        """TEXT"""
+        """Vergelijkt twee teksten met een andere tekst en geeft terug wat het meeste overeen komt"""
         words_list = self.compare_dictionaries(self.words, model1.words, model2.words)
         words = ['%.2f' % elem for elem in words_list]
         word_lengths_list = self.compare_dictionaries(self.word_lengths, model1.word_lengths, model2.word_lengths)
@@ -248,8 +252,8 @@ class TextModel:
         print(
             "Vergelijkingsresultaten:\n"
             "\n"
-            "naam" + "\t\t\t" + "Model1" + "\t\t" + "Model2\n"
-            "----" + "\t\t\t" + "----" + "\t\t" + "----\n"
+            "naam" + "\t\t\t" + "Model1" + "\t\t\t" + "Model2\n"
+            "----" + "\t\t\t" + "----" + "\t\t\t" + "----\n"
             "words" + "\t\t\t" + (words[0])+ "\t\t" + (words[1]) + "\n"
             "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t" + (word_lengths[1]) + "\n"
             "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t" + (sentence_lengths[1]) + "\n"
@@ -289,20 +293,20 @@ tm=TextModel()
 
 print(' +++++++++++ Model 1 +++++++++++ ')
 tm1 = TextModel()
-tm1.read_text_from_file('train1.txt')
+tm1.read_text_from_file('HHGTG1.txt')
 tm1.create_all_dictionaries()  # deze is hierboven gegeven
 tm1.normalize()
 print(tm1)
 
 print(' +++++++++++ Model 2+++++++++++ ')
 tm2 = TextModel()
-tm2.read_text_from_file('train2.txt')
+tm2.read_text_from_file('another.txt')
 tm2.create_all_dictionaries()  # deze is hierboven gegeven
 tm2.normalize()
 print(tm2)
 
 print(' +++++++++++ Onbekende tekst +++++++++++ ')
 tm_unknown = TextModel()
-tm_unknown.read_text_from_file('unknown.txt')
+tm_unknown.read_text_from_file('output.txt')
 tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm_unknown) 
