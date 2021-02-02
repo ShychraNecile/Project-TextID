@@ -111,7 +111,6 @@ class TextModel:
             else: 
                 self.sentence_lengths[number] += 1
         return self.sentence_lengths    
-
     
       
     def make_word_lengths(self):
@@ -196,9 +195,17 @@ class TextModel:
 
     
     def compare_dictionaries(self, d, nd1, nd2):
-        """ De method compare_dictionaries moet twee kansen berekenen: de kans dat 
-        de dictionary d voortkomt uit de verdeling van de gegevens in de 
-        genormaliseerde dictionary nd1, en dezelfde kans, maar dan voor nd2."""
+        """ 
+        De method compare_dictionaries moet twee kansen berekenen: 
+
+        1) de kans dat de dictionary d voortkomt uit de verdeling van de gegevens in de 
+        genormaliseerde dictionary nd1
+        2) dezelfde kans, maar dan voor nd2.
+
+        return: Lijst aan log-waarschijnlijkheden van biede dictionaries.
+        Bijvoorbeeld [log1, log2] (de eerste is de log-waarschijnlijkheden voor nd1 en de tweede voor nd2).
+        """
+        
         total_nd1 = 0.0
         total_nd2 = 0.0
         epsilon = self.smallest_value(nd1, nd2) / 2
@@ -220,24 +227,43 @@ class TextModel:
                         total_nd2 += value * log2(value1)   
             
         self.list_of_log_probs = [total_nd1, total_nd2]
+
         return self.list_of_log_probs
 
+
     def compare_text_with_two_models(self, model1, model2):
-        """Vergelijkt twee teksten met een andere tekst en geeft terug wat het meeste overeen komt"""
+        """
+        Functie moet:
+        - compare_dictionaries aanroepen voor elke teksteigenschapsictionary.
+        - de teksteigenschapdictionary vergelijken met de corresponderende,
+        genormaliserende dictionaries in model1 en model2.
+
+        Dus, Vergelijkt twee teksten met een andere tekst en geeft terug
+        wat het meeste overeen komt
+        """
+
         words_list = self.compare_dictionaries(self.words, model1.words, model2.words)
         words = ['%.2f' % elem for elem in words_list]
+
         word_lengths_list = self.compare_dictionaries(self.word_lengths, model1.word_lengths, model2.word_lengths)
         word_lengths = ['%.2f' % elem for elem in word_lengths_list]
+
         sentence_lengths_list = self.compare_dictionaries(self.sentence_lengths, model1.sentence_lengths, model2.sentence_lengths)
         sentence_lengths = ['%.2f' % elem for elem in sentence_lengths_list]
+
         stems_list = self.compare_dictionaries(self.stems, model1.stems, model2.stems)
         stems = ['%.2f' % elem for elem in stems_list]
+
         punctuation_list = self.compare_dictionaries(self.punctuation, model1.punctuation, model2.punctuation)
         punctuation = ['%.2f' % elem for elem in punctuation_list]
-        var_list = (words_list, word_lengths_list, sentence_lengths_list,stems_list, punctuation_list)
+
+        var_list = (words_list, word_lengths_list, sentence_lengths_list, stems_list, punctuation_list)
+
+        print("DIT IS EEN LIJST VAN: ", var_list)
+
         win1 = 0  
         win2 = 0
-        Model= 0
+        Model = 0
 
         for var in var_list:
             if max(var) == var[0]:
@@ -255,11 +281,11 @@ class TextModel:
             "\n"
             "naam" + "\t\t\t" + "Model1" + "\t\t\t" + "Model2\n"
             "----" + "\t\t\t" + "----" + "\t\t\t" + "----\n"
-            "words" + "\t\t\t" + (words[0])+ "\t\t" + (words[1]) + "\n"
-            "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t" + (word_lengths[1]) + "\n"
-            "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t" + (sentence_lengths[1]) + "\n"
-            "stems" + "\t\t\t" + (stems[0])+ "\t\t" + (stems[1]) + "\n"
-            "punctuation" + "\t\t" + (punctuation[0])+ "\t\t" + (punctuation[1]) + "\n"
+            "words" + "\t\t\t" + (words[0])+ "\t\t\t" + (words[1]) + "\n"
+            "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t\t" + (word_lengths[1]) + "\n"
+            "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t\t" + (sentence_lengths[1]) + "\n"
+            "stems" + "\t\t\t" + (stems[0])+ "\t\t\t" + (stems[1]) + "\n"
+            "punctuation" + "\t\t" + (punctuation[0])+ "\t\t\t" + (punctuation[1]) + "\n"
             "\n"
             "-->  Model 1 wint op "+str(win1)+" features\n"
             "-->  Model 2 wint op "+str(win2)+" features\n"
@@ -269,15 +295,17 @@ class TextModel:
 
     #, word_lengths, sentence_lengths, stems, punctuation
 
-
-
     def create_all_dictionaries(self) :
-        """Draait alle methodes die dictionaries vullen"""
+        """
+        Draait alle methodes die ervoor zorgen dat de dictionaries
+        gevuld worden.
+        """
         self.make_sentence_lengths()
         self.make_word_lengths()
         self.make_words()
         self.make_stems()
         self.make_punctuation()
+
 
     def normalize(self):
         self.normalize_dictionary(self.words)
@@ -289,6 +317,27 @@ class TextModel:
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
 
+print(' +++++++++++ Model 1 +++++++++++ ')
+tm1 = TextModel()
+tm1.read_text_from_file('train1.txt')
+tm1.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm1)
+
+print(' +++++++++++ Model 2+++++++++++ ')
+tm2 = TextModel()
+tm2.read_text_from_file('train2.txt')
+tm2.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm2)
+
+
+print(' +++++++++++ Onbekende tekst +++++++++++ ')
+tm_unknown = TextModel()
+tm_unknown.read_text_from_file('unknown.txt')
+tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
+print(tm_unknown)
+
+# de hoofdvergelijkingsmethode
+tm_unknown.compare_text_with_two_models(tm1, tm2)
 
 tm=TextModel()
 
