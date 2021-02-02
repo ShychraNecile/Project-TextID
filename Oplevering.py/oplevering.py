@@ -7,20 +7,11 @@
 #
 
 
-"""
-De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in het model.
-Doel: zodat je ermee kan testen en kan controleren dat ze werken.
-> constructor en __repr__ :: CHECK
-> clean_string :: CHECK
-> make_word_lenghts
-> make_words
-> make_stems
-"""
-
 from string import punctuation
 from nltk.stem import PorterStemmer
 from math import log2
 ps = PorterStemmer()
+
 
 class TextModel:
     """A class supporting complex models of text."""

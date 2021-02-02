@@ -3,7 +3,7 @@
 #
 # Opdracht: Tekstidentificatie
 #
-# Naam: Annemarleen Bosma
+# Naam: Annemarleen Bosma en Johan Kamps
 #
 
 """
@@ -80,10 +80,6 @@ class TextModel:
         assert tm.sentence_lengths == {16: 1, 5: 1, 6: 1} => 1 zin met 16 woorden, 1 zin met 5 woorden, 1 zin met 6 woorden
         
         """
-        # dus, je moet het aantal zinnen tellen, én het aantal woorden in de zin.
-        # als x is zin, return True. If True, count words. if word endswhith '.?!' dan 
-        # count_words. If word endswith '.?!' dan return is_sentence. count_sentence =+ 1
-        # het resultaat hiervan wordt dmv een dictionary getoond.
 
         print("The whole original string is:\n",self.text)
         print("")
@@ -95,8 +91,7 @@ class TextModel:
 
         total_num_words_text = len(LoW)
         print("The total number of words in the text is: ", total_num_words_text)
-
-        #print(LoW)             
+         
 
         for nw in LoW:
             if nw not in ".?!" or pw == "$":

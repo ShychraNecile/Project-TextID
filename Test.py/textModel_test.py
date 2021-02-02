@@ -1,3 +1,4 @@
+import unittest
 from begin import Textmodel
 from unittest import TestCase
 

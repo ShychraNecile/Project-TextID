@@ -182,8 +182,5 @@ class TextModel:
         return self.stems
         
 
-
-# assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
-
-tm=TextModel()
+tm = TextModel()
 

@@ -23,7 +23,7 @@ De milestone, milestone.py, moet aan de volgende eisen voldoen:
 - make_sentence_lengths  :: CHECK
 - make_word_lengths :: CHE
 - make_words :: CHECK
-- make_stems
+- make_stems :: CHECK
 
 Je hoeft je zelfbedachte teksteigenschap nog niet te bouwen, 
 en je hoeft twee modellen ook nog niet te kunnen vergelijken, 
@@ -36,7 +36,8 @@ in Gradescope in als onderdeel van het huiswerk.
 Oplevering.py
 
 Voor de oplevering, het laatste inlevermoment voor dit project, moet je het volledige tekstidentificatiesysteem afmaken. 
-We zullen je programma testen met de hierboven beschreven functie compare_text_with_two_models.
+We zullen je programma testen met de hierboven beschreven functie:
+- compare_text_with_two_models.
 
 De oplevering, oplevering.py, moet een complete uitwerking van het project bevatten. 
 
