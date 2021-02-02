@@ -83,7 +83,11 @@ class TextModel:
         return: string, which has no punctuation or upper-case letters.
         """
         clean_string = str.maketrans('','',punctuation)          
-        return self.text.translate(clean_string) 
+        stap1 = self.text.translate(clean_string) 
+        stap2 = ""
+        for word in stap1:
+            stap2 += word.lower()
+        return stap2
 
 
     # TEKSTEIGENSCHAPPEN
