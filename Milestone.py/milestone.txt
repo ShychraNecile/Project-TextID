@@ -20,23 +20,7 @@ Lever dit bestand, samen met je uitleg hierover in milestone.txt, in Gradescope 
 Door de tekst te strippen, hebben we geen 'last' van punctuaties, hoofdletters ed.
 
 
-> Deklasse bevat de teksteigenschapmethodes:
--> make_sentence_lengths
-
-
--> make_word_lengths 
-
-
--> make_words 
-
-
--> make_stems 
-
-
-
-https://stackoverflow.com/questions/24647400/what-is-the-best-stemming-method-in-python
-- Porter
-- snowball -> 'english'
-
+Onderbouwing keuze stemmer:
+nltk is een grote bibliotheek.
 Gekozen voor Porterstemmer, omdat deze minder agressief is dan de Lancasterstemmer. Daarnaast
 hoef je hier geen taal uit te kiezen zoals bij Snowballstemmer.
