@@ -48,7 +48,6 @@ class TextModel:
 
 
     # METHODES
-    @classmethod
     def read_text_from_file(self, filename):
         """
         methode:    read_text_from_file(self, filename) 
@@ -75,7 +74,11 @@ class TextModel:
         return: string, which has no punctuation or upper-case letters.
         """
         clean_string = str.maketrans('','',punctuation)          
-        return self.text.translate(clean_string) 
+        stap1 = self.text.translate(clean_string) 
+        stap2 = ""
+        for word in stap1:
+            stap2 += word.lower()
+        return stap2
 
 
     # TEKSTEIGENSCHAPPEN
@@ -116,7 +119,7 @@ class TextModel:
         Make_word_lengths(self) geeft de het aantal woorden in de text weer en 
         de lengte er van.
         """   
-        LoW = self.text.split()   
+        LoW = self.clean_string(self.text).split()   
 
         for woord in LoW:
             number = len(woord)
@@ -283,22 +286,22 @@ class TextModel:
 
 tm=TextModel()
 
-print(' +++++++++++ Model 1 +++++++++++ ')
-tm1 = TextModel()
-tm1.read_text_from_file('HHGTG1.txt')
-tm1.create_all_dictionaries()  # deze is hierboven gegeven
-tm1.normalize()
-print(tm1)
+#print(' +++++++++++ Model 1 +++++++++++ ')
+#tm1 = TextModel()
+#tm1.read_text_from_file('test.txt')
+#tm1.create_all_dictionaries()  # deze is hierboven gegeven
+#tm1.normalize()
+#print(tm1)
 
-print(' +++++++++++ Model 2+++++++++++ ')
-tm2 = TextModel()
-tm2.read_text_from_file('another.txt')
-tm2.create_all_dictionaries()  # deze is hierboven gegeven
-tm2.normalize()
-print(tm2)
+#print(' +++++++++++ Model 2+++++++++++ ')
+#tm2 = TextModel()
+#tm2.read_text_from_file('another.txt')
+#tm2.create_all_dictionaries()  # deze is hierboven gegeven
+#tm2.normalize()
+#print(tm2)
 
-print(' +++++++++++ Onbekende tekst +++++++++++ ')
-tm_unknown = TextModel()
-tm_unknown.read_text_from_file('output.txt')
-tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-print(tm_unknown) 
+#print(' +++++++++++ Onbekende tekst +++++++++++ ')
+#tm_unknown = TextModel()
+#tm_unknown.read_text_from_file('output.txt')
+#tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
+#print(tm_unknown) 
