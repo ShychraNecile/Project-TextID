@@ -7,20 +7,11 @@
 #
 
 
-"""
-De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in het model.
-Doel: zodat je ermee kan testen en kan controleren dat ze werken.
-> constructor en __repr__ :: CHECK
-> clean_string :: CHECK
-> make_word_lenghts
-> make_words
-> make_stems
-"""
-
 from string import punctuation
 from nltk.stem import PorterStemmer
 from math import log2
 ps = PorterStemmer()
+
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -31,16 +22,15 @@ class TextModel:
         Creates an empty TextModel.
         """
         
-        # Maak dictionary's voor elke eigenschap
-        
-        # attributes: 
+        # Dictionary's voor elke eigenschap:        
+       
         self.words = {}             # Om woorden te tellen
         self.word_lengths = {}      # Om woordlengtes te tellen
         self.stems = {}             # Om stammen te tellen
         self.sentence_lengths = {}  # Om zinslengtes te tellen
+
         self.list_of_log_probs = []
-        # Maak een eigen dictionary:
-        
+                
         self.punctuation = {}       # Interpunctie tellen
 
         
@@ -67,6 +57,7 @@ class TextModel:
                     self.text: variabele waaraan de inhoud toegekend is 
                     van het bestand filename. Type: 1 hele lange string.   
         """
+
         with open(filename) as f:
             data = f.read().replace("\n", "").rstrip("")            
             data = data.replace('\xad', '')
@@ -109,7 +100,7 @@ class TextModel:
                 zin += [count]
                 count = 0
             else:
-                pw=nw
+                pw = nw
 
         for number in zin:
             if number not in self.sentence_lengths: 
@@ -156,6 +147,7 @@ class TextModel:
         """geeft de "stam" weer van een woord en telt het voorkomen"""
         ctxt = self.clean_string(self.text)
         LoW = ctxt.split() 
+
         for word in LoW:
             if ps.stem(word) not in self.stems:
                 self.stems[ps.stem(word)] = 1

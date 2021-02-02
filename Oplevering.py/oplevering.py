@@ -22,7 +22,7 @@ class TextModel:
         Creates an empty TextModel.
         """
         
-        # Maak dictionary's voor elke eigenschap
+        # Dictionary's voor elke eigenschap:
         
         # attributes: 
         self.words = {}             # Om woorden te tellen
@@ -30,8 +30,9 @@ class TextModel:
         self.stems = {}             # Om stammen te tellen
         self.sentence_lengths = {}  # Om zinslengtes te tellen
 
-        # Maak een eigen dictionary:
-        
+        self.list_of_log_probs = []
+
+        # Maak een eigen dictionary:        
         self.punctuation = {}       # Interpunctie tellen
 
         
@@ -70,8 +71,14 @@ class TextModel:
         arguments: s, type string 
         return: string, which has no punctuation or upper-case letters.
         """
-        clean_string = str.maketrans('','',punctuation)        
-        return self.text.translate(clean_string) 
+        
+        clean_string = ""        
+
+        for p in punctuation:
+            s = self.text.replace(p, "")
+            clean_string = s.lower()
+            
+        return clean_string      
 
 
     # TEKSTEIGENSCHAPPEN
@@ -227,6 +234,32 @@ class TextModel:
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
 
+# zet de tekst tussen de triple quotes in een bestand genaamd test.txt
+test_text = """Dit is een korte zin. Dit is geen korte zin, omdat
+deze zin meer dan 10 woorden en een getal bevat! Dit is
+geen vraag, of wel?"""
 
-tm=TextModel()
+tm = TextModel()
+tm.read_text_from_file('test.txt')
+#assert tm.text == test_text
 
+# maak alle dictionary's
+tm.make_sentence_lengths()
+tm.make_word_lengths()
+tm.make_words()
+tm.make_stems()
+tm.make_punctuation()
+
+# alle dictionary's bekijken!
+print('Het model bevat deze dictionary\'s:')
+print(tm)
+
+# tm =TextModel()
+
+tm = TextModel()
+tm.read_text_from_file('test.txt')
+clean_text = """dit is een korte zin dit is geen korte zin omdat
+deze zin meer dan 10 woorden en een getal bevat dit is
+geen vraag of wel"""
+clean_s = tm.clean_string(tm.text)
+#assert clean_s == clean_text
