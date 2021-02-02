@@ -74,11 +74,11 @@ class TextModel:
         return: string, which has no punctuation or upper-case letters.
         """
         clean_string = str.maketrans('','',punctuation)          
-        stap1 = self.text.translate(clean_string) 
-        stap2 = ""
-        for word in stap1:
-            stap2 += word.lower()
-        return stap2
+        clean_str = self.text.translate(clean_string) 
+        clean_txt = ""
+        for word in clean_str:
+            clean_txt += word.lower()
+        return clean_txt
 
 
     # TEKSTEIGENSCHAPPEN
@@ -131,8 +131,14 @@ class TextModel:
 
 
     def make_words(self):
-        """     
-        TEXT
+        """
+        De methode make_words(self) creeert een dictionary van de opgeschoonde woorden (zelf).
+        Output: dictionary van een woord als key, en als value het aantal dat de desbetreffende key voorkomt.
+        return: dictionary self.words
+        
+        Dus, woord : getal hoe vaak het voorkomt in de opgeschoonde string.
+        assert tm.words == { 'dit': 3, 'is': 3, 'een': 2, 'korte': 2, 'zin': 3, 'geen': 2, 'omdat': 1, 'deze': 1, 'meer': 1, 'dan': 1, '10': 1, 'woorden': 1,
+        'en': 1, 'getal': 1, 'bevat': 1, 'vraag': 1, 'of': 1, 'wel': 1}
         """   
         ctxt = self.clean_string(self.text)
         LoW = ctxt.split() 
@@ -286,22 +292,22 @@ class TextModel:
 
 tm=TextModel()
 
-#print(' +++++++++++ Model 1 +++++++++++ ')
-#tm1 = TextModel()
-#tm1.read_text_from_file('test.txt')
-#tm1.create_all_dictionaries()  # deze is hierboven gegeven
-#tm1.normalize()
-#print(tm1)
+# print(' +++++++++++ Model 1 +++++++++++ ')
+# tm1 = TextModel()
+# tm1.read_text_from_file('test.txt')
+# tm1.create_all_dictionaries()  # deze is hierboven gegeven
+# tm1.normalize()
+# print(tm1)
 
-#print(' +++++++++++ Model 2+++++++++++ ')
-#tm2 = TextModel()
-#tm2.read_text_from_file('another.txt')
-#tm2.create_all_dictionaries()  # deze is hierboven gegeven
-#tm2.normalize()
-#print(tm2)
+# print(' +++++++++++ Model 2+++++++++++ ')
+# tm2 = TextModel()
+# tm2.read_text_from_file('another.txt')
+# tm2.create_all_dictionaries()  # deze is hierboven gegeven
+# tm2.normalize()
+# print(tm2)
 
-#print(' +++++++++++ Onbekende tekst +++++++++++ ')
-#tm_unknown = TextModel()
-#tm_unknown.read_text_from_file('output.txt')
-#tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-#print(tm_unknown) 
+# print(' +++++++++++ Onbekende tekst +++++++++++ ')
+# tm_unknown = TextModel()
+# tm_unknown.read_text_from_file('output.txt')
+# tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
+# print(tm_unknown) 
