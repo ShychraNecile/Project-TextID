@@ -33,6 +33,7 @@ class TextModel:
 
         # Maak een eigen dictionary:        
         self.punctuation = {}       # Interpunctie tellen
+        self.quotes = {}            # Aanhalingstekens tellen
 
         
     def __repr__(self):
@@ -44,6 +45,8 @@ class TextModel:
         s += 'Stammen:\n' + str(self.stems) + '\n\n'
         s += 'Zinslengtes:\n' + str(self.sentence_lengths) + '\n\n'
         s += 'Interpunctie:\n' + str(self.punctuation)
+
+        s += 'Aanhalingstekens:\n' + str(self.quotes) + '\n\n'
         return s
 
 
@@ -57,7 +60,7 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.   
         """
 
-        with open("./test.txt") as f:
+        with open("/home/annemarleen/programming/CS_for_all/Eindopdracht/test.txt") as f:
             self.text = f.read().replace("\n", "").rstrip("")            
 
         return self.text
@@ -191,6 +194,27 @@ class TextModel:
         return self.punctuation
 
 
+    def select_quotes(self):
+            """
+            telt het aantal aanhalingstekens in de tekst
+            """          
+
+            LoW = self.text.split()
+            LoSq = []
+            
+            for word in LoW:
+                for letter in word:
+                    if letter in punctuation:
+                        if letter == "\"" or letter == "'":
+                            if letter not in self.quotes:
+                                self.quotes[letter] = 1
+                            else:
+                                self.quotes[letter] +=1
+            print(f"Number of quotes are {self.quotes}")            
+                       
+            return self.quotes
+
+
     def normalize_dictionary(self, d):
         """
         Zet het absolute aantal voorkomens om naar een relatief deel
@@ -276,7 +300,10 @@ class TextModel:
         punctuation_list = self.compare_dictionaries(self.punctuation, model1.punctuation, model2.punctuation)
         punctuation = ['%.2f' % elem for elem in punctuation_list]
 
-        var_list = (words_list, word_lengths_list, sentence_lengths_list, stems_list, punctuation_list)
+        quotes = self.compare_dictionaries(self.quotes, model1.quotes, model2.quotes)
+        quotes = ['%.2f' % elem for elem in quotes_list]
+
+        var_list = (words_list, word_lengths_list, sentence_lengths_list, stems_list, punctuation_list, quotes_list)
 
         print("DIT IS EEN LIJST VAN: ", var_list)
 
@@ -305,6 +332,8 @@ class TextModel:
             "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t\t" + (sentence_lengths[1]) + "\n"
             "stems" + "\t\t\t" + (stems[0])+ "\t\t\t" + (stems[1]) + "\n"
             "punctuation" + "\t\t" + (punctuation[0])+ "\t\t\t" + (punctuation[1]) + "\n"
+
+             "quotes" + "\t\t" + (quotes[0])+ "\t\t\t" + (quotes[1]) + "\n"
             "\n"
             "-->  Model 1 wint op "+str(win1)+" features\n"
             "-->  Model 2 wint op "+str(win2)+" features\n"
@@ -324,6 +353,8 @@ class TextModel:
         self.make_stems()
         self.make_punctuation()
 
+        self.make_quotes()
+
 
     def normalize(self):
         self.normalize_dictionary(self.words)
@@ -332,48 +363,50 @@ class TextModel:
         self.normalize_dictionary(self.stems)
         self.normalize_dictionary(self.punctuation)
 
+        self.norm
 
 
-print(' +++++++++++ Model 1 +++++++++++ ')
-tm1 = TextModel()
-tm1.read_text_from_file('train1.txt')
-tm1.create_all_dictionaries()  # deze is hierboven gegeven
-print(tm1)
-
-print(' +++++++++++ Model 2+++++++++++ ')
-tm2 = TextModel()
-tm2.read_text_from_file('train2.txt')
-tm2.create_all_dictionaries()  # deze is hierboven gegeven
-print(tm2)
-
-
-print(' +++++++++++ Onbekende tekst +++++++++++ ')
-tm_unknown = TextModel()
-tm_unknown.read_text_from_file('unknown.txt')
-tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-print(tm_unknown)
-
-# de hoofdvergelijkingsmethode
-tm_unknown.compare_text_with_two_models(tm1, tm2)
-
-tm=TextModel()
 
 # print(' +++++++++++ Model 1 +++++++++++ ')
 # tm1 = TextModel()
-# tm1.read_text_from_file('test.txt')
+# tm1.read_text_from_file('train1.txt')
 # tm1.create_all_dictionaries()  # deze is hierboven gegeven
-# tm1.normalize()
 # print(tm1)
 
 # print(' +++++++++++ Model 2+++++++++++ ')
 # tm2 = TextModel()
-# tm2.read_text_from_file('another.txt')
+# tm2.read_text_from_file('train2.txt')
 # tm2.create_all_dictionaries()  # deze is hierboven gegeven
-# tm2.normalize()
 # print(tm2)
+
 
 # print(' +++++++++++ Onbekende tekst +++++++++++ ')
 # tm_unknown = TextModel()
-# tm_unknown.read_text_from_file('output.txt')
+# tm_unknown.read_text_from_file('unknown.txt')
 # tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-# print(tm_unknown) 
+# print(tm_unknown)
+
+# # de hoofdvergelijkingsmethode
+# tm_unknown.compare_text_with_two_models(tm1, tm2)
+
+# tm=TextModel()
+
+# # print(' +++++++++++ Model 1 +++++++++++ ')
+# # tm1 = TextModel()
+# # tm1.read_text_from_file('test.txt')
+# # tm1.create_all_dictionaries()  # deze is hierboven gegeven
+# # tm1.normalize()
+# # print(tm1)
+
+# # print(' +++++++++++ Model 2+++++++++++ ')
+# # tm2 = TextModel()
+# # tm2.read_text_from_file('another.txt')
+# # tm2.create_all_dictionaries()  # deze is hierboven gegeven
+# # tm2.normalize()
+# # print(tm2)
+
+# # print(' +++++++++++ Onbekende tekst +++++++++++ ')
+# # tm_unknown = TextModel()
+# # tm_unknown.read_text_from_file('output.txt')
+# # tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
+# # print(tm_unknown) 
