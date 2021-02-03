@@ -6,7 +6,7 @@
 # Naam: Annemarleen Bosma en Johan Kamps
 #
 
-
+import re
 from string import punctuation
 from nltk.stem import PorterStemmer
 from math import log2
@@ -32,7 +32,7 @@ class TextModel:
         self.list_of_log_probs = []
                 
         self.punctuation = {}       # Interpunctie tellen
-
+        self.syllables = {}         # Lettergrepen tellen
         
     def __repr__(self):
         """
@@ -42,7 +42,8 @@ class TextModel:
         s += 'Woordlengtes:\n' + str(self.word_lengths) + '\n\n'
         s += 'Stammen:\n' + str(self.stems) + '\n\n'
         s += 'Zinslengtes:\n' + str(self.sentence_lengths) + '\n\n'
-        s += 'Interpunctie:\n' + str(self.punctuation)
+        s += 'Interpunctie:\n' + str(self.punctuation) + '\n\n'
+        s += 'Lettergrepen:\n' + str(self.syllables) + '\n\n'
         return s
 
 
@@ -178,6 +179,26 @@ class TextModel:
                             self.punctuation[letter] += 1       
         return self.punctuation
 
+    
+    def make_syllables(self):
+        """telt lettergrepen per woord"""
+        LoW = self.text.split()
+        LoS = []
+        for word in LoW:
+            if len(re.findall('(?!e$)[aeiouy]+', word, re.I) + re.findall('^[^aeiouy]*e$', word, re.I)) == 0:
+                LoS += str(1)
+            else: 
+                LoS += str(len(
+                re.findall('(?!e$)[aeiouy]+', word, re.I) +
+                re.findall('^[^aeiouy]*e$', word, re.I)
+                ))
+        for number in LoS:
+            if number not in self.syllables:
+                self.syllables[number] = 1
+            else:
+                self.syllables[number] += 1 
+
+
 
     def normalize_dictionary(self, d):
         """Zet het absolute aantal voorkomens om naar een relatief deel"""
@@ -232,38 +253,23 @@ class TextModel:
 
 
     def compare_text_with_two_models(self, model1, model2):
-        """
-        Functie moet:
-        - compare_dictionaries aanroepen voor elke teksteigenschapsictionary.
-        - de teksteigenschapdictionary vergelijken met de corresponderende,
-        genormaliserende dictionaries in model1 en model2.
-
-        Dus, Vergelijkt twee teksten met een andere tekst en geeft terug
-        wat het meeste overeen komt
-        """
-
+        """Vergelijkt twee teksten met een andere tekst en geeft terug wat het meeste overeen komt"""
         words_list = self.compare_dictionaries(self.words, model1.words, model2.words)
         words = ['%.2f' % elem for elem in words_list]
-
         word_lengths_list = self.compare_dictionaries(self.word_lengths, model1.word_lengths, model2.word_lengths)
         word_lengths = ['%.2f' % elem for elem in word_lengths_list]
-
         sentence_lengths_list = self.compare_dictionaries(self.sentence_lengths, model1.sentence_lengths, model2.sentence_lengths)
         sentence_lengths = ['%.2f' % elem for elem in sentence_lengths_list]
-
         stems_list = self.compare_dictionaries(self.stems, model1.stems, model2.stems)
         stems = ['%.2f' % elem for elem in stems_list]
-
         punctuation_list = self.compare_dictionaries(self.punctuation, model1.punctuation, model2.punctuation)
         punctuation = ['%.2f' % elem for elem in punctuation_list]
-
-        var_list = (words_list, word_lengths_list, sentence_lengths_list, stems_list, punctuation_list)
-
-        print("DIT IS EEN LIJST VAN: ", var_list)
-
+        syllables_list = self.compare_dictionaries(self.syllables, model1.syllables, model2.syllables)
+        syllables = ['%.2f' % elem for elem in syllables_list]
+        var_list = (words_list, word_lengths_list, sentence_lengths_list,stems_list, punctuation_list, syllables_list)
         win1 = 0  
         win2 = 0
-        Model = 0
+        Model= 0
 
         for var in var_list:
             if max(var) == var[0]:
@@ -281,11 +287,12 @@ class TextModel:
             "\n"
             "naam" + "\t\t\t" + "Model1" + "\t\t\t" + "Model2\n"
             "----" + "\t\t\t" + "----" + "\t\t\t" + "----\n"
-            "words" + "\t\t\t" + (words[0])+ "\t\t\t" + (words[1]) + "\n"
-            "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t\t" + (word_lengths[1]) + "\n"
-            "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t\t" + (sentence_lengths[1]) + "\n"
-            "stems" + "\t\t\t" + (stems[0])+ "\t\t\t" + (stems[1]) + "\n"
-            "punctuation" + "\t\t" + (punctuation[0])+ "\t\t\t" + (punctuation[1]) + "\n"
+            "words" + "\t\t\t" + (words[0])+ "\t\t" + (words[1]) + "\n"
+            "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t" + (word_lengths[1]) + "\n"
+            "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t" + (sentence_lengths[1]) + "\n"
+            "stems" + "\t\t\t" + (stems[0])+ "\t\t" + (stems[1]) + "\n"
+            "punctuation" + "\t\t" + (punctuation[0])+ "\t\t" + (punctuation[1]) + "\n"
+            "syllables" + "\t\t" + (syllables[0])+ "\t\t" + (syllables[1]) + "\n"
             "\n"
             "-->  Model 1 wint op "+str(win1)+" features\n"
             "-->  Model 2 wint op "+str(win2)+" features\n"
@@ -295,17 +302,16 @@ class TextModel:
 
     #, word_lengths, sentence_lengths, stems, punctuation
 
+
+
     def create_all_dictionaries(self) :
-        """
-        Draait alle methodes die ervoor zorgen dat de dictionaries
-        gevuld worden.
-        """
+        """Draait alle methodes die dictionaries vullen"""
         self.make_sentence_lengths()
         self.make_word_lengths()
         self.make_words()
         self.make_stems()
         self.make_punctuation()
-
+        self.make_syllables()
 
     def normalize(self):
         self.normalize_dictionary(self.words)
@@ -313,6 +319,7 @@ class TextModel:
         self.normalize_dictionary(self.sentence_lengths)
         self.normalize_dictionary(self.stems)
         self.normalize_dictionary(self.punctuation)
+        self.normalize_dictionary(self.syllables)
 
 # assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
 
