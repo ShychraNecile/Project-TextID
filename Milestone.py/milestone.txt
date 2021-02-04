@@ -24,3 +24,21 @@ Onderbouwing keuze stemmer:
 nltk is een grote bibliotheek.
 Gekozen voor Porterstemmer, omdat deze minder agressief is dan de Lancasterstemmer. Daarnaast
 hoef je hier geen taal uit te kiezen zoals bij Snowballstemmer.
+
+Donderdag 4 februari 2021
+Code in milestone.py aangepast nav vragenuurtje.
+Snowballstemmer geimporteerd en code versimpeld.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
