@@ -6,21 +6,15 @@
 # Naam: Annemarleen Bosma en Johan Kamps
 #
 
-
-"""
-De methode __repr__(self) geeft een overzicht terug van alle dictionary’s in het model.
-Doel: zodat je ermee kan testen en kan controleren dat ze werken.
-> constructor en __repr__ :: CHECK
-> clean_string :: CHECK
-> make_word_lenghts :: CHECK
-> make_words :: CHECK
-> make_stems :: CHECK
-"""
-
 from string import punctuation
-from nltk.stem import LancasterStemmer
+#from nltk.stem import LancasterStemmer
+#ls = LancasterStemmer()
+# from nltk.stem import PorterStemmer
+# ps = PorterStemmer()
 
-ls = LancasterStemmer()
+import snowballstemmer
+
+from collections import Counter
 
 
 
@@ -41,6 +35,7 @@ class TextModel:
         self.stems = {}             # Om stammen te tellen
         self.sentence_lengths = {}  # Om zinslengtes te tellen
         
+        self.text = ""
         # Maak een eigen dictionary:
         
         self.my_feature = {}        # Om ... te tellen
@@ -69,26 +64,28 @@ class TextModel:
                     van het bestand filename. Type: 1 hele lange string.   
         """
 
-        with open("./test.txt") as f:
+        with open(filename) as f:
             self.text = f.read().replace("\n", "").rstrip("")            
 
         return self.text
 
 
-    def clean_string(self, text):
+    def clean_string(self, s):
         """
         This method, make_clean_string(self, s) 
         arguments: s, type string 
         return: string, which has no punctuation or upper-case letters.
         """
 
-        clean_string = ""        
+        text = ""
 
-        for p in punctuation:
-            s = self.text.replace(p, "")
-            clean_string = s.lower()
-            
-        return clean_string       
+        for c in s:
+            if c in punctuation:
+                continue
+            else:
+                text += c.lower()
+
+        return text          
 
 
     # TEKSTEIGENSCHAPPEN
@@ -129,119 +126,56 @@ class TextModel:
         print("sentence : lengths")
         return self.sentence_lengths    
 
-
-
+    
     def make_word_lengths(self):
         """     
-        De make_word_lengths(self, s) moet parameter s(type string) gebruiken om de
-        dictionary self.word_lengths te vullen.
-        output: dictionairy of the lenght of the words: self.word_lengths.
-        Het resultaat van deze functie is: dictionary: het aantal woorden; lenght of words     
+        De make_word_lengths(self) geeft de het aantal woorden in de text weer en 
+        de lengte er van.
+        """   
+        LoW = self.text.split()   
 
-        Dus, het aantal woorden dat uit een bepaald aantal karakters bestaat.
-        """
-        clean_str = clean_string(self.text)
-
-        self.word_lengths = {}
-        #character_count = 0
-        words = []
-        words = clean_str.split()
-        current_word = []
-
-        keys = []
-        values = []
-        
-        print(words)
-        total_num_words_clean_string = len(words)
-        print("The total number of words in the no-puntuacion string is: ", total_num_words_clean_string)
-
-        for word in words:
-            lenght_of_word = len(word)
-            print(f"The lenght of the word '{word}' is: ", lenght_of_word)
-            keys.append(lenght_of_word)
-            character_count = 0
-            
-            if lenght_of_word not in self.word_lengths:
-                self.word_lengths[lenght_of_word] = 1
+        for woord in LoW:
+            number = len(woord)
+            if number not in self.word_lengths:
+                self.word_lengths[number] = 1
             else:
-                self.word_lengths[lenght_of_word] += 1
-            
-                return self.word_lengths
+                self.word_lengths[number] += 1
+        return self.word_lengths
 
 
-# assert tm.word_lengths == {2 karakters: 6 woorden, 3 karakters: 10 woorden, 4: 4, 5: 6, 7: 1}
-
-
-
-    def make_words(self, text):
+    def make_words(self):
         """
         De methode make_words(self) creeert een dictionary van de opgeschoonde woorden (zelf).
         Output: dictionary van een stam als key, en als value het aantal dat de desbetreffende key voorkomt.
         return: dictionary self.stems
         
-        Dus, stam : getal hoe vaak het voorkomt in het opgeschoonde woord.
+        Dus, stam : getal hoe vaak het voorkomt in het opgeschoonde woord.     
+        """  
 
-        assert tm.words == { 'dit': 3, 'is': 3, 'een': 2, 'korte': 2, 'zin': 3, 'geen': 2, 'omdat': 1, 'deze': 1, 'meer': 1, 'dan': 1, '10': 1, 'woorden': 1,
-        'en': 1, 'getal': 1, 'bevat': 1, 'vraag': 1, 'of': 1, 'wel': 1}
-        """
+        ctxt = self.clean_string(self.text)
+        LoW = ctxt.split() 
 
-        self.words = {}
-        cleaned_string = tm.make_clean_string(self.text)          
-        LoW = cleaned_string.split()
-
-        print(LoW)
-
-        word_count = 0
-        
         for word in LoW:
-            if word in self.words:
-                self.words[word] += 1
+            if word not in self.words:
+                self.words[str(word)] = 1
             else:
-                self.words[word]=1
+                self.words[str(word)] += 1
+            
         return self.words
 
 
     def make_stems(self):
-        """
-        De methode make_stems(self) creëert een dictionary van de stammen van 
-        de opgeschoonde woorden.
-        Output: dictionary van een stam als key, en als value het aantal dat de desbetreffende key voorkomt.
-        return: dictionary self.words
+        """geeft de "stam" weer van een woord en telt het voorkomen"""
+        stemmer = snowballstemmer.stemmer('dutch')
+
+        words = self.clean_string(self.text).split()
+        stemmed = stemmer.stemWords(words)
+
+        self.stems = Counter(stemmed)
+ 
+        #return self.stems
         
-        Dus, woord : getal hoe vaak het voorkomt in de opgeschoonde string.
-      
-        assert tm.stems == {'dit': 3, 'is': 3, 'een': 2, 'kort': 2, 'zin': 3, 'gen': 2,
-        'omdat': 1, 'dez': 1, 'mer': 1, 'dan': 1, '10': 1, 'woord': 1, 'en': 1, 'getal': 1,
-        'bevat': 1, 'vrag': 1, 'of': 1, 'wel': 1 }
 
-
-        Om make_stems te implementeren, moet je een functie schrijven die woorden als invoer krijgt en stammen als uitvoer geeft. Je mag hierbij:.
-        """
-        
-        clean_txt = self.clean_string(self.text)
-        LoW = clean_txt.split() 
-
-        for word in LoW:
-
-            if word not in self.stems:
-                self.stems[ls.stem(word)] = 1
-
-            else:
-                self.stems[ls.stem(word)] += 1
-
-        return self.stems
-
-
-
-
-        # _TESTS
 
 tm = TextModel()
-
-
-
-
-
-
-
 
