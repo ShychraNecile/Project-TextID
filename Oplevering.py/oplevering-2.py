@@ -203,6 +203,8 @@ class TextModel:
         for word in LoW:
             if len(word) < 3 and pw == "$": #korter dan drie kan geen "zin" zijn
                 count +=1
+            elif len(word) < 3 and pw == "^": #korter dan drie kan geen "zin" zijn
+                None
             elif word[0] == '"' and word[-1] == '"' and word[-2] in punctuation: #zin van 1 woord           
                 zin += [1]
                 pw = "^"
@@ -357,15 +359,15 @@ class TextModel:
         print(
             "Vergelijkingsresultaten:\n"
             "\n"
-            "naam" + "\t\t\t" + "Model1" + "\t\t" + "Model2\n"
-            "----" + "\t\t\t" + "----" + "\t\t" + "----\n"
+            "naam" + "\t\t\t" + "Model1" + "\t\t\t" + "Model2\n"
+            "----" + "\t\t\t" + "----" + "\t\t\t" + "----\n"
             "words" + "\t\t\t" + (words[0])+ "\t\t" + (words[1]) + "\n"
             "word_lengths" + "\t\t" + (word_lengths[0])+ "\t\t" + (word_lengths[1]) + "\n"
             "sentence_lengths" + "\t" + (sentence_lengths[0])+ "\t\t" + (sentence_lengths[1]) + "\n"
             "stems" + "\t\t\t" + (stems[0])+ "\t\t" + (stems[1]) + "\n"
             "punctuation" + "\t\t" + (punctuation[0])+ "\t\t" + (punctuation[1]) + "\n"
             "syllables" + "\t\t" + (syllables[0])+ "\t\t" + (syllables[1]) + "\n"
-            "dialog_lengths" + "\t\t" + (dialog_lengths[0])+ "\t\t" + (dialog_lengths[1]) + "\n"
+            "dialog_lengths" + "\t\t" + (dialog_lengths[0])+ "\t\t\t" + (dialog_lengths[1]) + "\n"
             "\n"
             "-->  Model 1 wint op "+str(win1)+" features\n"
             "-->  Model 2 wint op "+str(win2)+" features\n"
@@ -401,20 +403,20 @@ class TextModel:
 
 print(' +++++++++++ Model 1 +++++++++++ ')
 tm1 = TextModel()
-tm1.read_text_from_file('another.txt')
+tm1.read_text_from_file('Adams.txt') #vijf hitchhikersguide boeken
 tm1.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm1)
 
 print(' +++++++++++ Model 2+++++++++++ ')
 tm2 = TextModel()
-tm2.read_text_from_file('output.txt')
+tm2.read_text_from_file('Colfer.txt') # 4 ARTEMIS FOWL boeken
 tm2.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm2)
 
 
 print(' +++++++++++ Onbekende tekst +++++++++++ ')
 tm_unknown = TextModel()
-tm_unknown.read_text_from_file('droids.txt')
+tm_unknown.read_text_from_file('another.txt') #6e hitchhikersboek geschreven door Colfer
 tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm_unknown)
 
@@ -423,22 +425,3 @@ tm_unknown.compare_text_with_two_models(tm1, tm2)
 
 tm=TextModel()
 
-# print(' +++++++++++ Model 1 +++++++++++ ')
-# tm1 = TextModel()
-# tm1.read_text_from_file('test.txt')
-# tm1.create_all_dictionaries()  # deze is hierboven gegeven
-# tm1.normalize()
-# print(tm1)
-
-# print(' +++++++++++ Model 2+++++++++++ ')
-# tm2 = TextModel()
-# tm2.read_text_from_file('another.txt')
-# tm2.create_all_dictionaries()  # deze is hierboven gegeven
-# tm2.normalize()
-# print(tm2)
-
-# print(' +++++++++++ Onbekende tekst +++++++++++ ')
-# tm_unknown = TextModel()
-# tm_unknown.read_text_from_file('output.txt')
-# tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
-# print(tm_unknown) 
