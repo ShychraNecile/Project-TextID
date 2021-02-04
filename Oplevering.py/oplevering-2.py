@@ -411,20 +411,20 @@ class TextModel:
 
 print(' +++++++++++ Model 1 +++++++++++ ')
 tm1 = TextModel()
-tm1.read_text_from_file('Adams.txt') #vijf hitchhikersguide boeken
+tm1.read_text_from_file('adams.txt') #vijf hitchhikersguide boeken
 tm1.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm1)
 
 print(' +++++++++++ Model 2+++++++++++ ')
 tm2 = TextModel()
-tm2.read_text_from_file('Colfer.txt') # 4 ARTEMIS FOWL boeken
+tm2.read_text_from_file('colfer.txt') # 4 ARTEMIS FOWL boeken
 tm2.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm2)
 
 
 print(' +++++++++++ Onbekende tekst +++++++++++ ')
 tm_unknown = TextModel()
-tm_unknown.read_text_from_file('another.txt') #6e hitchhikersboek geschreven door Colfer
+tm_unknown.read_text_from_file('mostly_harmless.txt') # colfer.txt :6e hitchhikersboek geschreven door Colfer / mostly_harmless.txt : Douglas Adams 5e HHGTG boek
 tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm_unknown)
 
