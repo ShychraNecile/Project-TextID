@@ -350,6 +350,13 @@ class TextModel:
             else:
                 None
                 
+        if abs(float(tm_unknown.gedeelte_dialoog)-float(tm1.gedeelte_dialoog)) < abs(float(tm_unknown.gedeelte_dialoog)-float(tm2.gedeelte_dialoog)):
+            win1 += 1
+        elif tm1.gedeelte_dialoog == tm2.gedeelte_dialoog:
+            None
+        else:
+            win2 += 1
+            
         if win1 > win2:
             Model += 1
         elif win2 > win1:
@@ -368,6 +375,7 @@ class TextModel:
             "punctuation" + "\t\t" + (punctuation[0])+ "\t\t" + (punctuation[1]) + "\n"
             "syllables" + "\t\t" + (syllables[0])+ "\t\t" + (syllables[1]) + "\n"
             "dialog_lengths" + "\t\t" + (dialog_lengths[0])+ "\t\t\t" + (dialog_lengths[1]) + "\n"
+            "dialog_gedeelte" + "\t\t" + tm1.gedeelte_dialoog + "\t\t\t" + tm2.gedeelte_dialoog + "\n"
             "\n"
             "-->  Model 1 wint op "+str(win1)+" features\n"
             "-->  Model 2 wint op "+str(win2)+" features\n"
