@@ -269,9 +269,13 @@ class TextModel:
 
     def smallest_value(self, nd1, nd2):
         """Kleinste waarde tussen twee dictionaries"""
-        min_nd1 = min(nd1.values())
-        min_nd2 = min(nd2.values())
-        return min(min_nd1, min_nd2)
+        min_nd1 = min(nd1.values(), default=0)
+        min_nd2 = min(nd2.values(), default=0)
+        
+        if min_nd1 == min_nd2:
+            return min_nd1
+        else:
+            return min(min_nd1, min_nd2)
 
     
     def compare_dictionaries(self, d, nd1, nd2):
@@ -291,7 +295,9 @@ class TextModel:
         epsilon = self.smallest_value(nd1, nd2) / 2
 
         for key, value in d.items():
-            if key not in nd1.keys():
+            if key == 0:
+                total_nd1 = 0.01
+            elif key not in nd1.keys():
                 total_nd1 += 1 * log2(epsilon)   
             else:
                 for key1, value1 in nd1.items():
@@ -299,7 +305,9 @@ class TextModel:
                         total_nd1 += value * log2(value1)
             
         for key, value in d.items():
-            if key not in nd2.keys():
+            if key == 0:
+                total_nd2 = 0.01
+            elif key not in nd2.keys():
                 total_nd2 += 1 * log2(epsilon)           
             else:
                 for key1, value1 in nd2.items():
@@ -333,15 +341,18 @@ class TextModel:
         Model= 0
 
         for var in var_list:
-            if max(var) == var[0]:
+            if max(var) == var[0] and max(var) != var[1]:
                 win1 += 1
-            else:
+            elif max(var) == var[1] and max(var) != var[0]:
                 win2 += 1
-        
+            else:
+                None
+                
         if win1 > win2:
             Model += 1
-        else:
+        elif win2 > win1:
             Model += 2
+            
 
         print(
             "Vergelijkingsresultaten:\n"
@@ -390,25 +401,25 @@ class TextModel:
 
 print(' +++++++++++ Model 1 +++++++++++ ')
 tm1 = TextModel()
-tm1.read_text_from_file('train1.txt')
+tm1.read_text_from_file('another.txt')
 tm1.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm1)
 
 print(' +++++++++++ Model 2+++++++++++ ')
 tm2 = TextModel()
-tm2.read_text_from_file('train2.txt')
+tm2.read_text_from_file('output.txt')
 tm2.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm2)
 
 
 print(' +++++++++++ Onbekende tekst +++++++++++ ')
 tm_unknown = TextModel()
-tm_unknown.read_text_from_file('unknown.txt')
+tm_unknown.read_text_from_file('droids.txt')
 tm_unknown.create_all_dictionaries()  # deze is hierboven gegeven
 print(tm_unknown)
 
 # de hoofdvergelijkingsmethode
-#tm_unknown.compare_text_with_two_models(tm1, tm2)
+tm_unknown.compare_text_with_two_models(tm1, tm2)
 
 tm=TextModel()
 
