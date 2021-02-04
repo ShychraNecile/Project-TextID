@@ -1,0 +1,39 @@
+
+Functies:
+- make_punctuation toegevoegd. Geeft de interpunctie en het voorkomen ervan weer.
+
+- select_quotes: telt het aantal aanhalingstekens in de tekst ('deleted': kreeg de foutmelding die ik hierdoor kreeg niet weg, 
+dus toen maar weggelaten. Er was al 1 eingen teksteigenschap make_punctuation)
+
+- normalize_dictionary: normalizeert een dictionary. Dit betekent dat het het absolute aantal voorkomens omzet naar een relatief deel.
+
+- smallest_value: Geeft de kleinste waarde terug van 2 genormaliseerde dictionaries.
+
+- compare_dictionaries:
+De method compare_dictionaries moet twee kansen berekenen: 
+
+        1) de kans dat de dictionary d voortkomt uit de verdeling van de gegevens in de 
+        genormaliseerde dictionary nd1
+        2) dezelfde kans, maar dan voor nd2.
+
+        return: Lijst aan log-waarschijnlijkheden van biede dictionaries.
+        Bijvoorbeeld [log1, log2] (de eerste is de log-waarschijnlijkheden voor nd1 en de tweede voor nd2).
+
+- compare_text_with_two_models:
+Functie moet:
+        - compare_dictionaries aanroepen voor elke teksteigenschapsictionary.
+        - de teksteigenschapdictionary vergelijken met de corresponderende,
+        genormaliserende dictionaries in model1 en model2.
+
+        Dus, Vergelijkt twee teksten met een andere tekst en geeft terug
+        wat het meeste overeen komt
+
+
+- create_all_dictionaries: Draait alle methodes die ervoor zorgen dat de dictionaries
+        gevuld worden.
+
+- normalize
+
+
+
+
